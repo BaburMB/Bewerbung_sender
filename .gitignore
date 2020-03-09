@@ -1,0 +1,4 @@
+*.docx
+!donor.docx
+*.pdf
+/.idea
