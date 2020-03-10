@@ -2,18 +2,18 @@ from docx import Document
 from docx.shared import Pt
 from docx.shared import Inches
 from docx2pdf import convert
-
+import gender_detector
 
 print("Initializing donor document...")
 doc = Document('donor.docx')                    #read default document
 print("Initializing donor document... OK")
 
-run = doc.add_paragraph().add_run()
-font = run.font
-font.name = "Arial"
-font.size = Pt(12)
-
+# run = doc.add_paragraph().add_run()
+# font = run.font
+# font.name = "Arial"
+# font.size = Pt(12)
 d = "d"
+
 gruss_receiver = input(">> WHOM are you sending? ")
 if gruss_receiver == d: gruss_receiver = "Damen und Herren"
 print("Okay, sending to ", gruss_receiver)
@@ -33,13 +33,9 @@ print("Parsing paragraph... OK")
 print(gruss_receiver[0])
 gruss_receiver_gender = d
 
-if gruss_receiver[0] == "F" or gruss_receiver[0] == "f":
-    gruss_receiver_gender = "Female"
-elif gruss_receiver[0] == "H" or gruss_receiver[0] == "h":
-    gruss_receiver_gender = "Male"
-else:
-    print("Couldn't detect gender for ", gruss_receiver[0], ", will use default gender for Grüß")
-print("Receiver's gender is ", gruss_receiver_gender)
+# Detecting a gender of a receiver for applying into Word document
+Receiver = gender_detector.GenderDetector(gruss_receiver)
+Receiver.detect_gender()
 
 
 if gruss_receiver_gender == "Male":
