@@ -1,18 +1,16 @@
 from docx import Document
 from docx.shared import Pt
 from docx.shared import Inches
-from docx2pdf import convert
 import gender_detector
+import docxToPdf
+import email_sender
 
 print("Initializing donor document...")
 doc = Document('donor.docx')                    #read default document
 print("Initializing donor document... OK")
 
-# run = doc.add_paragraph().add_run()
-# font = run.font
-# font.name = "Arial"
-# font.size = Pt(12)
-d = "d"
+
+d = "d"                                         #d is always d, right?
 
 gruss_receiver = input(">> WHOM are you sending? ")
 if gruss_receiver == d: gruss_receiver = "Damen und Herren"
@@ -60,37 +58,38 @@ print("Applying style... OK")
 
 # saving_name = job + ".docx"
 saving_name = "Anschreiben als " + job + "in " + firma_receiver
-if gruss_receiver != d: saving_name = saving_name + " für " + gruss_receiver
+if gruss_receiver != d: saving_name = saving_name + " fuer " + gruss_receiver
 saving_name_docx = saving_name + ".docx"
 saving_name_pdf = saving_name + ".pdf"
 doc.save(saving_name_docx)
-# print("Saved as ", saving_name)
-# print(doc.paragraphs[2].text)
+
 
 #####CONVERTING DOCX INTO PDF########
 
-# wdFormatPDF = 17
-#
-# in_file = saving_name_docx
-# out_file = saving_name_pdf
-#
-#
-# # word = comtypes.client.CreateObject('Word.Application')
-# word = win32com.client.Dispatch('Word.Application')
-# document = word.Documents.Open(in_file)
-# document.SaveAs(out_file, FileFormat=wdFormatPDF)
-# document.Close()
-# word.Quit()
+pdf = docxToPdf.Converter(saving_name_pdf, saving_name_docx)
+pdf.convert()
+# saving_name_pdf = saving_name_pdf.replace(" fuer ", " für ")
 
-print('Converting ', saving_name_pdf, " into PDF...")
-convert(saving_name_docx)
-# convert(saving_name_pdf)
+
+####SEND BY EMAIL#######
+
+
 while True:
-    try:
-        convert(saving_name_pdf)
+    temp01_email = input("Send E-Mail? Y/N")
+    if temp01_email == "Y" or temp01_email == "y":
+        receiver_email = input(">> EMAIL of the receiver: ")
+        email = email_sender.EmailSender(gruss_receiver, receiver_email, job, gruss_receiver_gender, saving_name_pdf)
+        email.send_email()
         break
-    except AssertionError:
-        print("Error in API, but you shoudn't care...")
+    elif temp01_email == "N" or temp01_email == "n":
+        print("Not sending an e-mail. Goodbye!")
         break
-# convert("my_docx_folder/")
-print("SUCCESS")
+    else:
+        continue
+
+# if temp01_email == "Y" or temp01_email == "y":
+#     receiver_email = input(">> EMAIL of the receiver: ")
+#     email = email_sender.EmailSender(gruss_receiver, receiver_email, job, gruss_receiver_gender, saving_name_pdf)
+# else:
+#     print("Not sending an e-mail. Goodbye!")
+
