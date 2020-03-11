@@ -1,9 +1,6 @@
+*.json
 *.docx
 !donor.docx
 *.pdf
 /.idea
 /__pycache__
-credentials.json
-token.json
-lebenslauf_CV_mamadzhanov.pdf
-Diploma_Bachelor.pdf
