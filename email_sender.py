@@ -18,7 +18,7 @@ class EmailSender:
             body,
             ['lebenslauf_CV_mamadzhanov.pdf', self.pdf, 'Diploma_Bachelor.pdf']
         )
-        print ("Sent to the " + self.email + ". Success!")
+        print("Sent to the " + self.email + ". Success!")
 
     def write_body(self):
         main_text = """
