@@ -9,10 +9,20 @@ import clean_directory
 import space_remover
 
 
-print("Initializing donor document...")
+# print("Initializing donor document...")
 doc = Document('donor.docx')                    #read default document
-print("Initializing donor document... OK")
-
+print('Initializing donor document "donor.docx"... OK')
+print ("""              _,     _   _    ,_
+           o888P     Y8o8Y     Y888o.
+         d88888      88888      88888b
+       ,8888888b_  _d88888b_  _d8888888,
+       888888888888888888888888888888888
+       888888888888888888888888888888888
+        Y8888P"Y888P"Y888P-Y888P"Y88888'
+         Y888   '8'   Y8P   '8'   888Y
+          '8o          V          o8'
+             `                   `
+""")
 
 d = "d"                                         #d is always d, right?
 
@@ -44,7 +54,7 @@ firma_receiver = Obj.remove()
 
 print("Okay, let's write ", firma_receiver)
 
-print("Parsing paragraph...")
+# print("Parsing paragraph...")
 paragraph = doc.paragraphs[2].text
 print("Parsing paragraph... OK")
 
@@ -59,19 +69,19 @@ print(temp)
 
 if temp == "Male":
     paragraph = paragraph.replace("%%receiver%%", "r " + gruss_receiver)
-    print("Putting male name " + gruss_receiver + ", OK")
+    print("Putting male name '" + gruss_receiver + "', OK")
 
 elif temp == "Female":
     paragraph = paragraph.replace("%%receiver%%", " " + gruss_receiver)
-    print("Putting female " + gruss_receiver + ", OK")
+    print("Putting female '" + gruss_receiver + "', OK")
 else:
     paragraph = paragraph.replace("%%receiver%%", " " + gruss_receiver)
-    print("Putting default name " + gruss_receiver + ", OK")
+    print("Putting default name '" + gruss_receiver + "', OK")
 
 paragraph = paragraph.replace("%%firma%%", firma_receiver)
-print("Putting firma name " + firma_receiver + ", OK")
+print("Putting firma name '" + firma_receiver + "', OK")
 paragraph = paragraph.replace("%%job%%", job)
-print("Putting job name " + job + ", OK")
+print("Putting job name '" + job + "', OK")
 doc.paragraphs[2].text = paragraph
 print("Pasting text... OK")
 doc.paragraphs[2].style = "bewerbung_default_paragraph"
@@ -91,7 +101,14 @@ pdf = docxToPdf.Converter(saving_name_pdf, saving_name_docx)
 pdf.convert()
 # saving_name_pdf = saving_name_pdf.replace(" fuer ", " für ")
 
-
+print("""
+ ..............
+ .  *      *  .
+[.      '     .]
+ .            .
+ .     ~~     .
+ ..............
+""")
 ####SEND BY EMAIL#######
 
 receiver_email = ""
@@ -107,6 +124,7 @@ while True:
         break
     else:
         continue
+
 
 os.remove(saving_name_docx)
 cleaner = clean_directory.Mover(saving_name_docx, saving_name_pdf, firma_receiver, receiver_email)
