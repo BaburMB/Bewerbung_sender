@@ -10,13 +10,12 @@ class Converter:
     def convert(self):
         print('Converting ', self.filename, " into PDF...")
         convert(self.filename_docx)
-        # convert(saving_name_pdf)
         while True:
             try:
                 convert(self.filename)
                 break
             except AssertionError:
-                print("Error in API, but you should not care...")
+                print("Error in 3rd-party API, but you should not care...")
                 break
-        # convert("donor.docx/")
+
         print("SUCCESS")

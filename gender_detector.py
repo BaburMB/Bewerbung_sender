@@ -13,11 +13,5 @@ class GenderDetector:
         else:
             print("Couldn't detect gender for ", self.gruss_receiver[0], ", will use default gender for Sehr...")
         print("Receiver's gender is ", self.gender)
-        # self.condition = 'Used'
-
-# class Main:
-#     gruss_receiver = "Herr Muller"
-#     Receiver = GenderDetector(gruss_receiver)
-#     Receiver.detect_gender()
-
+        
 
