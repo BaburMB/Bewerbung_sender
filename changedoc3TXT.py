@@ -38,6 +38,7 @@ print("""
 """)
 
 d = "d"  # d is always d, right?
+initiativbewerbung = False
 vienna = {
     1010: "Innere Stadt",
     1020: 'Leopoldstadt',
@@ -78,6 +79,9 @@ print("Okay, sending to ", gruss_receiver)
 job = listOfLines[1]
 if job == d:
     job = "Mitarbeiter"
+elif job == "i":
+    job = "Initiativbewerbung"
+    initiativbewerbung = True
 Obj = space_remover.SpaceRemover(job)
 job = Obj.remove()
 print("Okay, your possible job is ", job)
@@ -85,6 +89,7 @@ print("Okay, your possible job is ", job)
 firma_receiver = listOfLines[2]
 if firma_receiver == d:
     firma_receiver = "Ihrer Firma"
+
 Obj = space_remover.SpaceRemover(firma_receiver)
 firma_receiver = Obj.remove()
 print("Okay, let's write ", firma_receiver)
@@ -116,6 +121,7 @@ paragraph1 = doc.paragraphs[1].text
 paragraph2 = doc.paragraphs[2].text
 paragraph3 = doc.paragraphs[3].text
 paragraph4 = doc.paragraphs[4].text
+paragraph13 = doc.paragraphs[13].text
 
 print("Parsing paragraphs... OK")
 
@@ -143,8 +149,16 @@ today = date.today().strftime("%d.%m.%Y")
 paragraph2 = paragraph2.replace("%%date%%", today)
 print("Putting today's date, OK")
 
-paragraph3 = paragraph3.replace("%%job%%", job)
-print("Putting job name '" + job + "', OK")
+if initiativbewerbung:
+    paragraph3 = paragraph3.replace("Bewerbung als ", " ")
+    doc.paragraphs[3].text = paragraph3
+    paragraph3 = doc.paragraphs[3].text
+    paragraph3 = paragraph3.replace(" %%job%%", (job + " bei " + firma_receiver))
+    print(job + "', OK")
+else:
+    paragraph3 = paragraph3.replace("%%job%%", job)
+    print("Putting job name '" + job + "', OK")
+
 
 if temp == "Male":
     paragraph4 = paragraph4.replace("%%receiver2%%", "r " + gruss_receiver)
@@ -157,10 +171,18 @@ else:
     paragraph4 = paragraph4.replace("%%receiver2%%", " " + gruss_receiver)
     print("Putting default name '" + gruss_receiver + "', OK")
 
+paragraph13 = paragraph13.replace("%%firma%%", firma_receiver)
+print("Putting firma name '" + firma_receiver + "', OK")
+
+paragraph13 = paragraph13.replace("%%job%%", job)
+print("Putting job name '" + job + "', OK")
+
+
 doc.paragraphs[1].text = paragraph1
 doc.paragraphs[2].text = paragraph2
 doc.paragraphs[3].text = paragraph3
 doc.paragraphs[4].text = paragraph4
+doc.paragraphs[13].text = paragraph13
 print("Pasting text... OK")
 
 # doc.paragraphs[0].style = "bewerbung_default_paragraph"
@@ -168,6 +190,7 @@ doc.paragraphs[1].style = "bewerbung_receiver"
 doc.paragraphs[2].style = "bewerbung_date_right"
 doc.paragraphs[3].style = "bewerbung_header"
 doc.paragraphs[4].style = "bewerbung_default_paragraph"
+doc.paragraphs[13].style = "bewerbung_default_paragraph"
 print("Applying styles... OK")
 
 # saving_name = job + ".docx"
