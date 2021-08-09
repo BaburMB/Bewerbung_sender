@@ -81,7 +81,7 @@ pytest-watch==4.2.0
 python-dateutil==2.7.3
 python-docx==0.8.10
 pytz==2018.5
-pywin32==227
+pywin32==301
 pywinpty==0.5.7
 pyzmq==19.0.0
 qtconsole==4.4.1
